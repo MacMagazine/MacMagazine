@@ -1,12 +1,13 @@
 {
+  "originHash" : "255298906b5e0fe45154cee505684b0a368e9c7ddaac83f76ceb11094cd38ea6",
   "pins" : [
     {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher.git",
       "state" : {
-        "revision" : "277f1ab2c6664b19b4a412e32b094b201e2d5757",
-        "version" : "7.10.0"
+        "revision" : "c0940e241945e6378c01fbd45fd3815579d47ef5",
+        "version" : "8.1.0"
       }
     },
     {
@@ -14,10 +15,10 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/OneSignal/OneSignal-XCFramework",
       "state" : {
-        "revision" : "2def0328e37a48943cb69c7c89d084adf7dd70f3",
-        "version" : "5.0.4"
+        "revision" : "d2c658b43a3caa996927c679ea17e7f4f439b8ad",
+        "version" : "5.2.6"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
