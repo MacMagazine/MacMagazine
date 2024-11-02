@@ -10,7 +10,7 @@ import PassKit
 import SafariServices
 import StoreKit
 import UIKit
-import WebKit
+@preconcurrency import WebKit
 
 enum RightButtons {
 	case spin

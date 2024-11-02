@@ -1,7 +1,31 @@
 {
   "images" : [
     {
-      "filename" : "phone_1.png",
+      "filename" : "AppIcon-1.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "AppIcon-1_black.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "filename" : "AppIcon_tinted.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
