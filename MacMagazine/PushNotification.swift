@@ -40,10 +40,9 @@ class Database {
 					let prefetcher = ImagePrefetcher(urls: urls)
 					prefetcher.start()
 
-                    if #available(iOS 14.0, *) {
-                        WidgetCenter.shared.reloadAllTimelines()
-                    }
-					onCompletion?()
+                    WidgetCenter.shared.reloadAllTimelines()
+
+                    onCompletion?()
                     return
 				}
 				images.append(post.artworkURL)
@@ -159,6 +158,7 @@ extension PushNotification: OSNotificationLifecycleListener {
 extension PushNotification: OSNotificationClickListener {
 	func onClick(event: OSNotificationClickEvent) {
 		let notification: OSNotification = event.notification
+        logD(notification)
 		guard let additionalData = notification.additionalData,
 			  let content = additionalData as? [String: String] else {
 			return

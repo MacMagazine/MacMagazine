@@ -37,11 +37,11 @@ extension Helper {
 	func showBadge() {
 		delay(1) {
 			if UserDefaults.standard.bool(forKey: Definitions.badge) {
-				UIApplication.shared.applicationIconBadgeNumber = badgeCount
+                UNUserNotificationCenter.current().setBadgeCount(badgeCount)
 				updateOneSignal(counter: badgeCount)
 			} else {
 				// Icon badge should be set to -1 to disappear but keep history of notifications
-				UIApplication.shared.applicationIconBadgeNumber = -1
+                UNUserNotificationCenter.current().setBadgeCount(-1)
 				updateOneSignal(counter: 0)
 			}
 		}

@@ -17,12 +17,21 @@ struct PostCell: View {
 
     let post: PostData
 
+    var imageSize: CGSize {
+        switch widgetFamily {
+        case .systemMedium: CGSize(width: 914, height: 914)
+        case .systemLarge: CGSize(width: 1352, height: 1352)
+        default: CGSize(width: 620, height: 620)
+        }
+    }
+
     var image: KFImage {
         if redactionReasons == .placeholder {
             return KFImage(URL(string: ""))
                 .placeholder { Image("image_logo_feature") }
         } else {
             return KFImage(URL(string: post.thumbnail ?? ""))
+                .setProcessor(ResizingImageProcessor(referenceSize: imageSize, mode: .aspectFit))
                 .placeholder { Image("image_logo_feature") }
         }
     }
@@ -51,6 +60,7 @@ struct PostCell: View {
                         .widgetURL(post.url)
                 }
             }
+            .widgetBackground(Color.clear)
 
         case .accessoryRectangular:
             HStack(spacing: 5) {
@@ -67,6 +77,7 @@ struct PostCell: View {
                     Spacer(minLength: 0)
                 }
             }
+            .widgetBackground(Color.clear)
 
         default:
             Link(destination: post.url) {
@@ -94,31 +105,45 @@ struct PostCell: View {
             contentView.shadow(color: .black, radius: 5)
                 .padding()
         }
-        .background(
-            LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.01), Color.black]), startPoint: .top, endPoint: .bottom))
+        .background(LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.01), Color.black]),
+                                         startPoint: .top,
+                                         endPoint: .bottom))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .edgesIgnoringSafeArea(.all)
         .background(image.resizable().scaledToFill())
-        .background(Color.white)
+        .widgetBackground(Color.clear)
         .clipped()
         .colorScheme(.dark)
+    }
+}
+
+extension View {
+    func widgetBackground(_ backgroundView: some View) -> some View {
+        containerBackground(for: .widget) {
+            backgroundView
+        }
     }
 }
 
 struct PostCell_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            if #available(iOSApplicationExtension 16.0, *) {
+            PostCell(post: .placeholder)
+                .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+                .previewDisplayName("Rectangular")
+            PostCell(post: .placeholder)
+                .previewContext(WidgetPreviewContext(family: .accessoryInline))
+                .previewDisplayName("Inline")
+            PostCell(post: .placeholder)
+                .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+                .previewDisplayName("Circular")
+
+            VStack(spacing: 1) {
                 PostCell(post: .placeholder)
-                    .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
-                    .previewDisplayName("Rectangular")
-                PostCell(post: .placeholder)
-                    .previewContext(WidgetPreviewContext(family: .accessoryInline))
-                    .previewDisplayName("Inline")
-                PostCell(post: .placeholder)
-                    .previewContext(WidgetPreviewContext(family: .accessoryCircular))
-                    .previewDisplayName("Circular")
             }
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
+            .previewDisplayName("Small")
+
             VStack(spacing: 1) {
                 PostCell(post: .placeholder)
                 PostCell(post: .placeholder)

@@ -22,7 +22,7 @@ struct RecentPostsProvider: TimelineProvider {
         }
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<RecentPostsEntry>) -> Void) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         getWidgetContent { posts in
             let timeline = Timeline(entries: [RecentPostsEntry(date: Date(), posts: posts)], policy: .atEnd)
             completion(timeline)

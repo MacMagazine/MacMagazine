@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GbX-Zp-bIv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GbX-Zp-bIv">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +13,7 @@
             <objects>
                 <navigationController title="NoArNavigation" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="GbX-Zp-bIv" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <tabBarItem key="tabBarItem" title="Podcast" image="mic.fill" catalog="system" id="59e-2Y-DJH"/>
+                    <tabBarItem key="tabBarItem" title="Podcast" image="microphone.fill" catalog="system" id="59e-2Y-DJH"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Tqr-74-5pJ">
                         <rect key="frame" x="0.0" y="48" width="414" height="44"/>
@@ -41,7 +40,7 @@
             <objects>
                 <tableViewController title="NoAr" extendedLayoutIncludesOpaqueBars="YES" clearsSelectionOnViewWillAppear="NO" id="dI9-bf-84Z" customClass="PodcastMasterViewController" customModule="MacMagazine" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="podcast" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="133" sectionHeaderHeight="1" sectionFooterHeight="1" id="M41-4U-Ums">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="608"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="604"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <color key="separatorColor" systemColor="systemGrayColor"/>
@@ -193,8 +192,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo" width="415" height="350"/>
-        <image name="mic.fill" catalog="system" width="110" height="128"/>
+        <image name="logo" width="90" height="68.5"/>
+        <image name="microphone.fill" catalog="system" width="110" height="128"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <namedColor name="MMBlueWhite">
             <color red="0.0" green="0.59200000762939453" blue="0.83099997043609619" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

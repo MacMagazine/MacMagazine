@@ -8,7 +8,7 @@ class TabBarController: NSObject, UITabBarControllerDelegate {
     var controllers: [UIViewController]?
 
     override init() {
-        guard let tabController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UITabBarController else {
+        guard let tabController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController as? UITabBarController else {
             return
         }
         controllers = tabController.viewControllers
@@ -17,7 +17,7 @@ class TabBarController: NSObject, UITabBarControllerDelegate {
     // MARK: - Indexes -
 
     func selectIndex(_ index: Int) {
-        guard let tabController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UITabBarController else {
+        guard let tabController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController as? UITabBarController else {
             return
         }
         if index < tabController.viewControllers?.count ?? 0 {
@@ -26,7 +26,7 @@ class TabBarController: NSObject, UITabBarControllerDelegate {
     }
 
     func removeIndexes(_ indexex: [Int]) {
-        guard let tabController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UITabBarController else {
+        guard let tabController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController as? UITabBarController else {
             return
         }
         var controllers = self.controllers
@@ -39,7 +39,7 @@ class TabBarController: NSObject, UITabBarControllerDelegate {
     }
 
     func resetTabs() {
-        guard let tabController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UITabBarController else {
+        guard let tabController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController as? UITabBarController else {
             return
         }
         tabController.viewControllers = self.controllers

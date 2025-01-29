@@ -15,17 +15,12 @@ struct MacMagazineWidgetExtension: Widget {
 
     private var supportedFamilies: [WidgetFamily] {
 #if os(iOS)
-        if #available(iOS 16, *) {
-            return [.accessoryRectangular,
-                    .accessoryInline,
-                    .accessoryCircular,
-                    .systemSmall,
-                    .systemMedium,
-					.systemLarge]
-        } else {
-            return [.systemSmall,
-                    .systemMedium]
-        }
+        return [.accessoryRectangular,
+                .accessoryInline,
+                .accessoryCircular,
+                .systemSmall,
+                .systemMedium,
+                .systemLarge]
 #else
         return [.systemSmall,
                 .systemMedium]
@@ -39,40 +34,48 @@ struct MacMagazineWidgetExtension: Widget {
         .configurationDisplayName("MacMagazine")
         .description("Confira nossos últimos posts!")
         .supportedFamilies(supportedFamilies)
-        .disableMargins()
+        .contentMarginsDisabled()
     }
 }
 
-private extension WidgetConfiguration {
-    func disableMargins() -> some WidgetConfiguration {
-        if #available(iOSApplicationExtension 15.0, *) {
-            return contentMarginsDisabled()
-        } else {
-            return self
-        }
-    }
+#Preview("Large", as: .systemLarge) {
+    MacMagazineWidgetExtension()
+} timeline: {
+    RecentPostsEntry(date: Date(),
+                     posts: [.placeholder, .placeholder, .placeholder])
 }
 
-struct MacMagazineWidgetExtension_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            if #available(iOSApplicationExtension 16.0, *) {
-                RecentPostsWidget(entry: RecentPostsEntry(date: Date(), posts: [.placeholder]))
-                    .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
-                    .previewDisplayName("Rectangular")
-                RecentPostsWidget(entry: RecentPostsEntry(date: Date(), posts: [.placeholder]))
-                    .previewContext(WidgetPreviewContext(family: .accessoryInline))
-                    .previewDisplayName("Inline")
-                RecentPostsWidget(entry: RecentPostsEntry(date: Date(), posts: [.placeholder]))
-                    .previewContext(WidgetPreviewContext(family: .accessoryCircular))
-                    .previewDisplayName("Circular")
-            }
-            RecentPostsWidget(entry: RecentPostsEntry(date: Date(), posts: [.placeholder]))
-                .previewContext(WidgetPreviewContext(family: .systemSmall))
-                .previewDisplayName("Small")
-			RecentPostsWidget(entry: RecentPostsEntry(date: Date(), posts: [.placeholder, .placeholder, .placeholder]))
-				.previewContext(WidgetPreviewContext(family: .systemLarge))
-				.previewDisplayName("Large")
-        }
-    }
+#Preview("Rectangular", as: .accessoryRectangular) {
+    MacMagazineWidgetExtension()
+} timeline: {
+    RecentPostsEntry(date: Date(),
+                     posts: [.placeholder])
+}
+
+#Preview("Inline", as: .accessoryInline) {
+    MacMagazineWidgetExtension()
+} timeline: {
+    RecentPostsEntry(date: Date(),
+                     posts: [.placeholder])
+}
+
+#Preview("Circular", as: .accessoryCircular) {
+    MacMagazineWidgetExtension()
+} timeline: {
+    RecentPostsEntry(date: Date(),
+                     posts: [.placeholder])
+}
+
+#Preview("Small", as: .systemSmall) {
+    MacMagazineWidgetExtension()
+} timeline: {
+    RecentPostsEntry(date: Date(),
+                     posts: [.placeholder])
+}
+
+#Preview("Medium", as: .systemMedium) {
+    MacMagazineWidgetExtension()
+} timeline: {
+    RecentPostsEntry(date: Date(),
+                     posts: [.placeholder, .placeholder])
 }

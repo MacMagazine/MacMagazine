@@ -32,7 +32,7 @@ class SplashViewController: UIViewController {
                 guard let controller = storyboard.instantiateViewController(withIdentifier: "main") as? UITabBarController,
                       let appDelegate = UIApplication.shared.delegate as? AppDelegate,
                       let splitViewController = controller.viewControllers?[1] as? UISplitViewController,
-                      let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else {
+                      let window = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last else {
                     return
                 }
 

@@ -72,7 +72,15 @@ class VideoCollectionViewController: UICollectionViewController {
         navigationItem.titleView = logoView
 		navigationItem.title = nil
 
-		setupYouTubePlayer()
+        registerForTraitChanges([UITraitUserInterfaceStyle.self],
+                                handler: { (self: Self, _) in
+            if !self.isPlaying {
+                self.collectionView.reloadData()
+            }
+            self.needsReload = self.isPlaying
+        })
+
+        setupYouTubePlayer()
 
 		searchController = UISearchController(searchResultsController: nil)
 		searchController?.searchBar.autocapitalizationType = .none
@@ -113,14 +121,6 @@ class VideoCollectionViewController: UICollectionViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         userActivity?.invalidate()
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if !isPlaying {
-            collectionView.reloadData()
-        }
-        needsReload = isPlaying
     }
 
     // MARK: - Local methods -

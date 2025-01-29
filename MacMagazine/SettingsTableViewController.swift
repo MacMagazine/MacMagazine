@@ -74,7 +74,12 @@ class SettingsTableViewController: UITableViewController {
 		self.tableView?.register(UINib(nibName: "SettingsDisclaimerFooter", bundle: nil), forHeaderFooterViewReuseIdentifier: "disclaimerFooter")
 		self.tableView?.register(UINib(nibName: "SettingsTermsFooter", bundle: nil), forHeaderFooterViewReuseIdentifier: "termsFooter")
 
-		tableView.rowHeight = UITableView.automaticDimension
+        registerForTraitChanges([UITraitUserInterfaceStyle.self],
+                                handler: { (self: Self, _) in
+            self.tableView.reloadData()
+        })
+
+        tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = 50
 
 		setInitialValues()
@@ -90,11 +95,6 @@ class SettingsTableViewController: UITableViewController {
 
 		patraoButton.setTitle(Settings().loginPatrao, for: .normal)
 		setupInAppPurchase()
-	}
-
-	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-		super.traitCollectionDidChange(previousTraitCollection)
-		tableView.reloadData()
 	}
 
 	// MARK: - TableView Methods -
@@ -419,7 +419,7 @@ extension SettingsTableViewController {
 													preferredStyle: .alert)
 			alertController.addAction(UIAlertAction(title: "OK", style: .default) { _ in
 				delay(0.1) {
-					UIApplication.shared.applicationIconBadgeNumber = 0
+                    UNUserNotificationCenter.current().setBadgeCount(0)
 				}
 				self.dismiss(animated: true)
 			})

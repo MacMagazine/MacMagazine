@@ -21,11 +21,9 @@ class NotificationService: UNNotificationServiceExtension {
 		self.contentHandler = contentHandler
 		bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
 
-		if #available(iOS 14.0, *) {
-			WidgetCenter.shared.reloadAllTimelines()
-		}
+        WidgetCenter.shared.reloadAllTimelines()
 
-		if let bestAttemptContent = bestAttemptContent,
+        if let bestAttemptContent = bestAttemptContent,
 		   let receivedRequest = receivedRequest {
 			OneSignalExtension.didReceiveNotificationExtensionRequest(receivedRequest, with: bestAttemptContent, withContentHandler: contentHandler)
 		}

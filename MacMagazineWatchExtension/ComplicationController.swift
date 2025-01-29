@@ -97,23 +97,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 	func createComplicationTemplate(for complication: CLKComplication, message: Complication) -> CLKComplicationTemplate? {
 
 		if complication.family == .modularLarge {
-			let template = CLKComplicationTemplateModularLargeStandardBody()
-			template.headerTextProvider = CLKSimpleTextProvider(text: message.header ?? "")
-			template.body1TextProvider = CLKSimpleTextProvider(text: message.line1 ?? "")
-			template.body2TextProvider = CLKSimpleTextProvider(text: message.line2 ?? "")
-			return(template)
+            return CLKComplicationTemplateModularLargeStandardBody(headerTextProvider: CLKSimpleTextProvider(text: message.header ?? ""),
+                                                                           body1TextProvider: CLKSimpleTextProvider(text: message.line1 ?? ""),
+                                                                           body2TextProvider: CLKSimpleTextProvider(text: message.line2 ?? ""))
 
 		} else if complication.family == .utilitarianLarge {
-			let template = CLKComplicationTemplateUtilitarianLargeFlat()
-			template.textProvider = CLKSimpleTextProvider(text: message.line1 ?? "")
-			return(template)
+            return CLKComplicationTemplateUtilitarianLargeFlat(textProvider: CLKSimpleTextProvider(text: message.line1 ?? ""))
 
 		} else if complication.family == .graphicRectangular {
-			let template = CLKComplicationTemplateGraphicRectangularStandardBody()
-			template.headerTextProvider = CLKSimpleTextProvider(text: message.line1 ?? "")
-			template.body1TextProvider = CLKSimpleTextProvider(text: message.line2 ?? "")
-			template.body2TextProvider = CLKSimpleTextProvider(text: message.header ?? "")
-			return(template)
+            return CLKComplicationTemplateGraphicRectangularStandardBody(headerTextProvider: CLKSimpleTextProvider(text: message.line1 ?? ""),
+                                                                         body1TextProvider: CLKSimpleTextProvider(text: message.line2 ?? ""),
+                                                                         body2TextProvider: CLKSimpleTextProvider(text: message.header ?? ""))
 
 		} else {
 			return nil

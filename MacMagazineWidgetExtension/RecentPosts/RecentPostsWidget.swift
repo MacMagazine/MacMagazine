@@ -43,11 +43,7 @@ struct RecentPostsWidget: View {
                 case .accessoryRectangular,
                         .accessoryInline,
                         .accessoryCircular:
-                if #available(iOSApplicationExtension 16.0, *) {
-                    PostCell(post: content[0])
-                } else {
-                    Text("Tamanho incompatível.")
-                }
+                PostCell(post: content[0])
 
                 case .systemExtraLarge:
                     Text("Tamanho incompatível.")
@@ -63,20 +59,15 @@ struct RecentPostsWidget: View {
 struct RecentPostsWidget_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            if #available(iOSApplicationExtension 16.0, *) {
-                RecentPostsWidget(entry: RecentPostsEntry(date: Date(), posts: [.placeholder]))
-                    .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
-                    .previewDisplayName("Rectangular")
-                RecentPostsWidget(entry: RecentPostsEntry(date: Date(), posts: [.placeholder]))
-                    .previewContext(WidgetPreviewContext(family: .accessoryInline))
-                    .previewDisplayName("Inline")
-                RecentPostsWidget(entry: RecentPostsEntry(date: Date(), posts: [.placeholder]))
-                    .previewContext(WidgetPreviewContext(family: .accessoryCircular))
-                    .previewDisplayName("Circular")
-            }
-            RecentPostsWidget(entry: RecentPostsEntry(date: Date(), posts: [.placeholder, .placeholder, .placeholder]))
-                .previewContext(WidgetPreviewContext(family: .systemLarge))
-                .previewDisplayName("Large")
+            RecentPostsWidget(entry: RecentPostsEntry(date: Date(), posts: [.placeholder]))
+                .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+                .previewDisplayName("Rectangular")
+            RecentPostsWidget(entry: RecentPostsEntry(date: Date(), posts: [.placeholder]))
+                .previewContext(WidgetPreviewContext(family: .accessoryInline))
+                .previewDisplayName("Inline")
+            RecentPostsWidget(entry: RecentPostsEntry(date: Date(), posts: [.placeholder]))
+                .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+                .previewDisplayName("Circular")
         }
     }
 }

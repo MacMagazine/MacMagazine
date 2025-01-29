@@ -22,11 +22,11 @@ struct Settings {
 	// MARK: - Device -
 
 	var isPhone: Bool {
-        return UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController?.traitCollection.horizontalSizeClass == .compact
+        return (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController?.traitCollection.horizontalSizeClass == .compact
     }
 
 	var isPad: Bool {
-        return UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController?.traitCollection.horizontalSizeClass == .regular
+        return (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController?.traitCollection.horizontalSizeClass == .regular
     }
 
 	var orientations: UIInterfaceOrientationMask {
@@ -47,7 +47,7 @@ struct Settings {
 
     var isDarkMode: Bool {
         if appearance == .native {
-            return UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController?.traitCollection.userInterfaceStyle == .dark
+            return (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController?.traitCollection.userInterfaceStyle == .dark
         }
         return appearance == .dark
     }
@@ -211,7 +211,7 @@ extension Settings {
 
 	func applyLightTheme() {
 		if isDarkMode {
-            UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.tintColor = LightTheme().tint
+            (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.tintColor = LightTheme().tint
 		}
 	}
 }

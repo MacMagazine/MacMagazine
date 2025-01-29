@@ -64,10 +64,7 @@ class FetchedResultsControllerDataSource: NSObject, UITableViewDataSource, UITab
         self.tableView = tableView
         self.tableView?.dataSource = self
         self.tableView?.delegate = self
-
-        if #available(iOS 15.0, *) {
-            self.tableView?.sectionHeaderTopPadding = 0
-        }
+        self.tableView?.sectionHeaderTopPadding = 0
     }
 
 	// MARK: - Scroll detection -

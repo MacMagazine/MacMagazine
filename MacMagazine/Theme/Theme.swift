@@ -25,19 +25,19 @@ extension Theme {
 
         // Ensure existing views render with new theme
         // https://developer.apple.com/documentation/uikit/uiappearance
-        application.windows.reload()
+        (application.connectedScenes.first as? UIWindowScene)?.windows.last?.reload()
     }
 
     // Optionally extend theme
     func extend(_ application: UIApplication) {
 
         // WINDOW
-
-        application.windows.first(where: { $0.isKeyWindow })?.tintColor = tint
+        let window = (application.connectedScenes.first as? UIWindowScene)?.windows.last
+        window?.tintColor = tint
 
         let selectedMode: UIUserInterfaceStyle = Settings().isDarkMode ? .dark : .light
         let overrideInterfaceStyle: UIUserInterfaceStyle = Settings().appearance == .native ? .unspecified : selectedMode
-        application.windows.first(where: { $0.isKeyWindow })?.overrideUserInterfaceStyle = overrideInterfaceStyle
+        window?.overrideUserInterfaceStyle = overrideInterfaceStyle
 
         // SEGMENTCONTROL
 

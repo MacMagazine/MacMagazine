@@ -345,9 +345,7 @@ class PostsMasterViewController: UITableViewController, FetchedResultsController
                     self.hideSpin()
 
                     // Reload Widgets
-                    if #available(iOS 14.0, *) {
-                        WidgetCenter.shared.reloadAllTimelines()
-                    }
+                    WidgetCenter.shared.reloadAllTimelines()
 
                     if let post = (UIApplication.shared.delegate as? AppDelegate)?.widgetSpotlightPost {
                         showDetailController(with: post)
@@ -651,14 +649,18 @@ func createWebViewController(post: PostData) -> WebViewController? {
 }
 
 func showDetailController(with link: String) {
-	let storyboard = UIStoryboard(name: "Main", bundle: nil)
-	guard let controller = storyboard.instantiateViewController(withIdentifier: "detailController") as? PostsDetailViewController,
-          let tabController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UITabBarController else {
-        logE("Failed TabController - \(String(describing: UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController))")
+    let rootViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+    guard let controller = storyboard.instantiateViewController(withIdentifier: "detailController") as? PostsDetailViewController,
+          let tabController = rootViewController as? UITabBarController else {
+        logE("Failed TabController - \(String(describing: rootViewController))")
+
+        open(link: link, mainController: rootViewController)
         return
     }
 
-	CoreDataStack.shared.links { links in
+    CoreDataStack.shared.links { links in
         // Check if URL exist
         if links.firstIndex(where: { $0.link == link }) != nil {
             prepareDetailController(controller, using: links, compare: link)
@@ -680,31 +682,35 @@ func showDetailController(with link: String) {
                         NotificationCenter.default.post(name: .updateSelectedPost, object: link)
                     }
                 }
+            } else {
+                open(link: link, mainController: rootViewController)
             }
         } else {
-            // Open single view
-            let storyboard = UIStoryboard(name: "WebView", bundle: nil)
-            guard let controller = storyboard.instantiateViewController(withIdentifier: "PostDetail") as? WebViewController,
-                  let url = URL(string: link) else {
-                return
-            }
-            let navVC = UINavigationController(rootViewController: controller)
-
-            if #available(iOS 15.0, *) {
-                let navigationBarAppearance = UINavigationBarAppearance()
-                navigationBarAppearance.configureWithDefaultBackground()
-                UINavigationBar.appearance().standardAppearance = navigationBarAppearance
-                UINavigationBar.appearance().compactAppearance = navigationBarAppearance
-                UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
-            }
-
-            controller.postURL = url
-            navVC.modalPresentationStyle = .automatic
-            tabController.show(navVC, sender: nil)
+            open(link: link, mainController: tabController)
         }
 
         (UIApplication.shared.delegate as? AppDelegate)?.widgetSpotlightPost = nil
-	}
+    }
+
+    func open(link: String, mainController: UIViewController?) {
+        // Open single view
+        let storyboard = UIStoryboard(name: "WebView", bundle: nil)
+        guard let controller = storyboard.instantiateViewController(withIdentifier: "PostDetail") as? WebViewController,
+              let url = URL(string: link) else {
+            return
+        }
+        let navVC = UINavigationController(rootViewController: controller)
+
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithDefaultBackground()
+        UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+        UINavigationBar.appearance().compactAppearance = navigationBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+
+        controller.postURL = url
+        navVC.modalPresentationStyle = .automatic
+        mainController?.show(navVC, sender: nil)
+    }
 }
 
 func delay(_ delay: Double, closure: @escaping () -> Void) {
