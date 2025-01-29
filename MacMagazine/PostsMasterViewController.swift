@@ -127,6 +127,7 @@ class PostsMasterViewController: UITableViewController, FetchedResultsController
 
 		navigationItem.titleView = logoView
 		navigationItem.title = nil
+        navigationItem.preferredSearchBarPlacement = .stacked
 
 		fetchController = FetchedResultsControllerDataSource(post: self.tableView, group: "headerDate")
         fetchController?.delegate = self
@@ -144,7 +145,7 @@ class PostsMasterViewController: UITableViewController, FetchedResultsController
 		searchController?.hidesNavigationBarDuringPresentation = true
         searchController?.searchBar.returnKeyType = .search
 
-		tableView.rowHeight = UITableView.automaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = 133
 
         tableView.sectionHeaderHeight = UITableView.automaticDimension

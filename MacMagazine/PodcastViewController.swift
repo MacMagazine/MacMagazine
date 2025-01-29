@@ -24,10 +24,11 @@ class PodcastViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.navigationItem.titleView = logoView
-		self.navigationItem.title = nil
+        navigationItem.titleView = logoView
+		navigationItem.title = nil
+        navigationItem.preferredSearchBarPlacement = .stacked
 
-		playerHeight.constant = 0.0
+        playerHeight.constant = 0.0
 
 		guard let viewController = self.children[0] as? PodcastMasterViewController else {
 			return

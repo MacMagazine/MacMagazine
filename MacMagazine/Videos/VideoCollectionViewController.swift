@@ -71,6 +71,7 @@ class VideoCollectionViewController: UICollectionViewController {
         // Do any additional setup after loading the view.
         navigationItem.titleView = logoView
 		navigationItem.title = nil
+        navigationItem.preferredSearchBarPlacement = .stacked
 
         registerForTraitChanges([UITraitUserInterfaceStyle.self],
                                 handler: { (self: Self, _) in
