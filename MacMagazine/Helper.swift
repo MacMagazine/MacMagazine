@@ -41,7 +41,7 @@ extension Helper {
 				updateOneSignal(counter: badgeCount)
 			} else {
 				// Icon badge should be set to -1 to disappear but keep history of notifications
-                UNUserNotificationCenter.current().setBadgeCount(-1)
+                UNUserNotificationCenter.current().setBadgeCount(0)
 				updateOneSignal(counter: 0)
 			}
 		}
