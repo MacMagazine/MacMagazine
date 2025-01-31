@@ -430,7 +430,7 @@ extension WebViewController: WKNavigationDelegate, WKUIDelegate {
 		hideView.alpha = 1
 		spin.startAnimating()
 
-        Timer.scheduledTimer(withTimeInterval: 0.6, repeats: false) { timer in
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { timer in
 			DispatchQueue.main.async {
 				self.hideView.alpha = 0
 				self.spin.stopAnimating()
