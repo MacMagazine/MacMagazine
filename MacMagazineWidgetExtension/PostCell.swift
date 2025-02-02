@@ -17,23 +17,9 @@ struct PostCell: View {
 
     let post: PostData
 
-    var imageSize: CGSize {
-        switch widgetFamily {
-        case .systemMedium: CGSize(width: 914, height: 914)
-        case .systemLarge: CGSize(width: 1352, height: 1352)
-        default: CGSize(width: 620, height: 620)
-        }
-    }
-
     var image: KFImage {
-        if redactionReasons == .placeholder {
-            return KFImage(URL(string: ""))
-                .placeholder { Image("image_logo_feature") }
-        } else {
-            return KFImage(URL(string: post.thumbnail ?? ""))
-                .setProcessor(ResizingImageProcessor(referenceSize: imageSize, mode: .aspectFit))
-                .placeholder { Image("image_logo_feature") }
-        }
+        KFImage(URL(string: redactionReasons == .placeholder ? "" : post.thumbnail ?? ""))
+            .placeholder { Image("image_logo_feature") }
     }
 
     @ViewBuilder

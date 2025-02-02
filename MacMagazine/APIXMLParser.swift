@@ -89,6 +89,7 @@ class APIXMLParser: NSObject, XMLParserDelegate {
 		if processItem {
 			value = value.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
+            // swiftlint:disable switch_case_alignment
 			switch elementName {
 			case "post-id":
 				currentPost.postId = value
@@ -105,11 +106,18 @@ class APIXMLParser: NSObject, XMLParserDelegate {
 				currentPost.categories.append(value)
 			case "description":
 				currentPost.excerpt = value
-			case "media:content":
-				guard let url = attributes?["url"] else {
-					return
-				}
-				currentPost.artworkURL = url
+            case "media:content":
+                guard let url = attributes?["url"] else {
+                    return
+                }
+                #if WIDGET
+                guard attributes?["image_size"] != nil else {
+                    return
+                }
+                currentPost.artworkURL = url
+                #else
+                currentPost.artworkURL = url
+                #endif
 			case "enclosure":
 				guard let url = attributes?["url"] else {
 					return
@@ -144,6 +152,7 @@ class APIXMLParser: NSObject, XMLParserDelegate {
 			default:
 				return
 			}
+            // swiftlint:enable switch_case_alignment
 		}
 	}
 

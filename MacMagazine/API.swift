@@ -132,7 +132,7 @@ class API {
 	var numberOfPosts = -1
 	var isWatchPosts = false
 
-	#if os(iOS) && !WIDGET
+    #if os(iOS) && !WIDGET
 	var onVideoCompletion: ((YouTube<String>?) -> Void)?
 	var onVideoSearchCompletion: ((YouTube<ResourceId>?) -> Void)?
 	#endif
@@ -148,12 +148,10 @@ class API {
 		getPosts(page: 0, completion)
 	}
 
-    func getWidgets(_ completion: ((XMLPost?) -> Void)?) {
-        numberOfPosts = 3
-        getPosts(page: 0, completion)
-    }
-
     func getPosts(page: Int = 0, _ completion: ((XMLPost?) -> Void)?) {
+        #if WIDGET
+        numberOfPosts = 3
+        #endif
         onCompletion = completion
         let host = "\(APIParams.feed)?\(APIParams.paged)\(page)"
         executeGetContent(host)

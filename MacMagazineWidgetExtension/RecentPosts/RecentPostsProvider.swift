@@ -34,8 +34,8 @@ extension RecentPostsProvider {
     fileprivate func getWidgetContent(onCompletion: @escaping (([PostData]) -> Void)) {
         var posts = [PostData]()
 
-        API().getWidgets { xmlPost in
-            guard let xmlPost = xmlPost else {
+        API().getPosts { xmlPost in
+            guard let xmlPost else {
                 let urls = posts.compactMap { $0.thumbnail }.compactMap { URL(string: $0) }
                 ImagePrefetcher(urls: urls, completionHandler: { _, _, _ in
                     onCompletion(posts)
@@ -46,11 +46,7 @@ extension RecentPostsProvider {
             let post = PostData(title: xmlPost.title,
                                 link: xmlPost.link,
                                 thumbnail: xmlPost.artworkURL,
-                                favorito: xmlPost.favorite,
-                                pubDate: xmlPost.pubDate,
-                                excerpt: xmlPost.excerpt,
-                                postId: xmlPost.postId,
-                                shortURL: xmlPost.shortURL)
+                                favorito: false)
             posts.append(post)
         }
     }
