@@ -46,7 +46,7 @@ struct PostCell: View {
                         .widgetURL(post.url)
                 }
             }
-            .widgetBackground(Color.clear)
+            .containerBackground(Color.clear, for: .widget)
 
         case .accessoryRectangular:
             HStack(spacing: 5) {
@@ -63,7 +63,7 @@ struct PostCell: View {
                     Spacer(minLength: 0)
                 }
             }
-            .widgetBackground(Color.clear)
+            .containerBackground(Color.clear, for: .widget)
 
         default:
             Link(destination: post.url) {
@@ -97,17 +97,9 @@ struct PostCell: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .edgesIgnoringSafeArea(.all)
         .background(image.resizable().scaledToFill())
-        .widgetBackground(Color.clear)
+        .containerBackground(Color.clear, for: .widget)
         .clipped()
         .colorScheme(.dark)
-    }
-}
-
-extension View {
-    func widgetBackground(_ backgroundView: some View) -> some View {
-        containerBackground(for: .widget) {
-            backgroundView
-        }
     }
 }
 

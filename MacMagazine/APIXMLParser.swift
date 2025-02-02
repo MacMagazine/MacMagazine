@@ -90,45 +90,18 @@ class APIXMLParser: NSObject, XMLParserDelegate {
 			value = value.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
             // swiftlint:disable switch_case_alignment
+#if WIDGET
 			switch elementName {
-			case "post-id":
-				currentPost.postId = value
 			case "title":
 				currentPost.title = value
 			case "link":
 				currentPost.link = value
-			case "pubDate":
-				currentPost.pubDate = value
-			case "category":
-				if currentPost.categories.isEmpty {
-					currentPost.categories = []
-				}
-				currentPost.categories.append(value)
-			case "description":
-				currentPost.excerpt = value
             case "media:content":
-                guard let url = attributes?["url"] else {
-                    return
-                }
-                #if WIDGET
-                guard attributes?["image_size"] != nil else {
+                guard let url = attributes?["url"],
+                      attributes?["image_size"] != nil else {
                     return
                 }
                 currentPost.artworkURL = url
-                #else
-                currentPost.artworkURL = url
-                #endif
-			case "enclosure":
-				guard let url = attributes?["url"] else {
-					return
-				}
-				currentPost.podcastURL = url
-			case "itunes:subtitle":
-				currentPost.podcast = value
-			case "itunes:duration":
-				currentPost.duration = value
-			case "rawvoice:embed":
-				currentPost.podcastFrame = value
 			case "item":
 				onCompletion?(currentPost)
 				parsedPosts += 1
@@ -137,21 +110,66 @@ class APIXMLParser: NSObject, XMLParserDelegate {
 					parsedPosts >= numberOfPosts {
 					parser.abortParsing()
 				}
-			case "guid":
-				currentPost.shortURL = value
-			case "content:encoded":
-				currentPost.playable = value.contains("youtube.com/embed/")
-				if isWatchPosts {
-					currentPost.fullContent = value.toHtmlDecoded()
-						.replacingOccurrences(of: "\n\n", with: "\n")
-						.replacingOccurrences(of: "\n\n", with: "\n")
-						.replacingOccurrences(of: "\n\n", with: "\n")
-						.replacingOccurrences(of: "\n\n", with: "\n")
-						.replacingOccurrences(of: "\n\n", with: "\n")
-				}
 			default:
 				return
 			}
+#else
+            switch elementName {
+            case "post-id":
+                currentPost.postId = value
+            case "title":
+                currentPost.title = value
+            case "link":
+                currentPost.link = value
+            case "pubDate":
+                currentPost.pubDate = value
+            case "category":
+                if currentPost.categories.isEmpty {
+                    currentPost.categories = []
+                }
+                currentPost.categories.append(value)
+            case "description":
+                currentPost.excerpt = value
+            case "media:content":
+                guard let url = attributes?["url"] else {
+                    return
+                }
+                currentPost.artworkURL = url
+            case "enclosure":
+                guard let url = attributes?["url"] else {
+                    return
+                }
+                currentPost.podcastURL = url
+            case "itunes:subtitle":
+                currentPost.podcast = value
+            case "itunes:duration":
+                currentPost.duration = value
+            case "rawvoice:embed":
+                currentPost.podcastFrame = value
+            case "item":
+                onCompletion?(currentPost)
+                parsedPosts += 1
+                processItem = false
+                if numberOfPosts > 0 &&
+                    parsedPosts >= numberOfPosts {
+                    parser.abortParsing()
+                }
+            case "guid":
+                currentPost.shortURL = value
+            case "content:encoded":
+                currentPost.playable = value.contains("youtube.com/embed/")
+                if isWatchPosts {
+                    currentPost.fullContent = value.toHtmlDecoded()
+                        .replacingOccurrences(of: "\n\n", with: "\n")
+                        .replacingOccurrences(of: "\n\n", with: "\n")
+                        .replacingOccurrences(of: "\n\n", with: "\n")
+                        .replacingOccurrences(of: "\n\n", with: "\n")
+                        .replacingOccurrences(of: "\n\n", with: "\n")
+                }
+            default:
+                return
+            }
+#endif
             // swiftlint:enable switch_case_alignment
 		}
 	}
