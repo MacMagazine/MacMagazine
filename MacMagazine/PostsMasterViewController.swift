@@ -694,6 +694,8 @@ func showDetailController(with link: String) {
     }
 
     func open(link: String, mainController: UIViewController?) {
+        (UIApplication.shared.delegate as? AppDelegate)?.widgetSpotlightPost = nil
+
         // Open single view
         let storyboard = UIStoryboard(name: "WebView", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "PostDetail") as? WebViewController,
