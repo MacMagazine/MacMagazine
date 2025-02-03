@@ -650,27 +650,32 @@ func createWebViewController(post: PostData) -> WebViewController? {
 }
 
 func showDetailController(with link: String) {
-    let rootViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController
-    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-
-    guard let controller = storyboard.instantiateViewController(withIdentifier: "detailController") as? PostsDetailViewController,
+    guard let rootViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController,
           let tabController = rootViewController as? UITabBarController else {
-        logE("Failed TabController - \(String(describing: rootViewController))")
-
-        open(link: link, mainController: rootViewController)
+        logE("Failed to load TabController")
         return
     }
 
     CoreDataStack.shared.links { links in
         // Check if URL exist
         if links.firstIndex(where: { $0.link == link }) != nil {
-            prepareDetailController(controller, using: links, compare: link)
+            logD("tabController.selectedIndex: \(tabController.selectedIndex)")
 
-            // Force first tab to present losing of reference
+            // Force first tab to prevent losing of reference
             tabController.selectedIndex = (UIApplication.shared.delegate as? AppDelegate)?.isMMLive ?? false ? 1 : 0
+
+            logD("tabController.selectedViewController: \(tabController.selectedViewController.debugDescription)")
 
             if let splitVC = tabController.selectedViewController as? UISplitViewController,
                let navVC = splitVC.children[Settings().isPhone ? 0 : 1] as? UINavigationController {
+
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                guard let controller = storyboard.instantiateViewController(withIdentifier: "detailController") as? PostsDetailViewController else {
+                    logE("Failed to load PostsDetailViewController")
+                    return
+                }
+
+                prepareDetailController(controller, using: links, compare: link)
 
                 if Settings().isPhone {
                     splitVC.showDetailViewController(controller, sender: nil)
@@ -684,9 +689,11 @@ func showDetailController(with link: String) {
                     }
                 }
             } else {
+                logE("Failed to load UISplitViewController or UINavigationController")
                 open(link: link, mainController: rootViewController)
             }
         } else {
+            logE("Failed to load database URL")
             open(link: link, mainController: tabController)
         }
 
