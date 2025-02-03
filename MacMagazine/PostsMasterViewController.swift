@@ -650,13 +650,20 @@ func createWebViewController(post: PostData) -> WebViewController? {
 }
 
 func showDetailController(with link: String) {
-    guard let rootViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController,
-          let tabController = rootViewController as? UITabBarController else {
-        logE("Failed to load TabController")
+    guard let rootViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController else {
+        logE("Failed to load RootViewController")
         return
     }
 
+    logD("rootViewController: \(rootViewController)")
+
     CoreDataStack.shared.links { links in
+        guard let tabController = rootViewController as? UITabBarController else {
+            logE("Failed to load UITabBarController")
+            open(link: link, mainController: rootViewController)
+            return
+        }
+
         // Check if URL exist
         if links.firstIndex(where: { $0.link == link }) != nil {
             logD("tabController.selectedIndex: \(tabController.selectedIndex)")
