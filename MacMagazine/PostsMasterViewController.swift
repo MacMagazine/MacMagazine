@@ -83,6 +83,7 @@ class PostsMasterViewController: UITableViewController, FetchedResultsController
     var status = Status.firstLoad
     var shortcutStatus = Status.unknown
 
+    var cancellables: Set<AnyCancellable> = []
     var cancellable: AnyCancellable?
     var selection = [String]() {
         didSet {
@@ -155,6 +156,14 @@ class PostsMasterViewController: UITableViewController, FetchedResultsController
         fetchController?.reloadData()
 
         filter.accessibilityLabel = "Mostrar opções de filtro."
+
+        (UIApplication.shared.delegate as? AppDelegate)?.pushNotification?.$newContentAvailable
+            .receive(on: RunLoop.main)
+            .sink { content in
+                guard let content = content else { return }
+                showDetailController(with: content)
+            }
+            .store(in: &cancellables)
     }
 
 	override func viewWillAppear(_ animated: Bool) {

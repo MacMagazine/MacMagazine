@@ -85,16 +85,6 @@ extension AppDelegate {
 		// Push Notification
 		pushNotification = PushNotification()
 		pushNotification?.setup(options: launchOptions)
-		pushNotification?.$newContentAvailable
-			.delay(for: 1, scheduler: RunLoop.main)
-			.sink { content in
-				guard let content = content else { return }
-                // Make sure most recent posts are loaded
-                API().getPosts(page: 0) { _ in
-                    showDetailController(with: content)
-                }
-			}
-			.store(in: &cancellables)
 	}
 }
 

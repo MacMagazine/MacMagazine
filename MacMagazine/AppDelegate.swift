@@ -6,7 +6,6 @@
 //  Copyright © 2017 MacMagazine. All rights reserved.
 //
 
-import Combine
 import UIKit
 
 @UIApplicationMain
@@ -21,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var widgetSpotlightPost: String?
     var shortcutAction: Notification.Name?
 	var pushNotification: PushNotification?
-	var cancellables: Set<AnyCancellable> = []
 
 	// MARK: - Window lifecycle -
 

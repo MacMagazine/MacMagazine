@@ -122,7 +122,6 @@ extension PushNotification: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
-
 		Database().update { [weak self] in
 			self?.handleMMLive(true)
 			completionHandler()
@@ -149,6 +148,7 @@ extension PushNotification: UNUserNotificationCenterDelegate {
 extension PushNotification: OSNotificationLifecycleListener {
 	func onWillDisplay(event: OSNotificationWillDisplayEvent) {
 		event.preventDefault()
+        logD("")
 		Database().update {
 			event.notification.display()
 		}
@@ -164,6 +164,8 @@ extension PushNotification: OSNotificationClickListener {
 			return
 		}
 		logD(content["url"])
-		newContentAvailable = content["url"]
+        Database().update { [weak self] in
+            self?.newContentAvailable = content["url"]
+        }
 	}
 }

@@ -26,7 +26,7 @@ class SplashViewController: UIViewController {
                 (UIApplication.shared.delegate as? AppDelegate)?.isMMLive = isLive
             }
 
-            delay(0.6) {
+            delay(0.2) {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
                 guard let controller = storyboard.instantiateViewController(withIdentifier: "main") as? UITabBarController,
@@ -41,7 +41,7 @@ class SplashViewController: UIViewController {
                 splitViewController.preferredPrimaryColumnWidthFraction = 0.33
 
                 UIView.transition(with: window,
-                                  duration: 0.4,
+                                  duration: 0.2,
                                   options: .transitionCrossDissolve,
                                   animations: {
                     window.rootViewController = controller
