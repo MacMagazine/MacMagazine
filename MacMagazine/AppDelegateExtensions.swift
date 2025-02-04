@@ -89,7 +89,10 @@ extension AppDelegate {
 			.delay(for: 1, scheduler: RunLoop.main)
 			.sink { content in
 				guard let content = content else { return }
-				showDetailController(with: content)
+                // Make sure most recent posts are loaded
+                API().getPosts(page: 0) { _ in
+                    showDetailController(with: content)
+                }
 			}
 			.store(in: &cancellables)
 	}
