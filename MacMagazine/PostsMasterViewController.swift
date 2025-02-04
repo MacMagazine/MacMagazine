@@ -655,12 +655,12 @@ func showDetailController(with link: String) {
         return
     }
 
-    logD("rootViewController: \(rootViewController)")
+    logD("rootViewController: \(rootViewController.debugDescription)")
 
     CoreDataStack.shared.links { links in
         guard let tabController = rootViewController as? UITabBarController else {
-            logE("Failed to load UITabBarController")
-            open(link: link, mainController: rootViewController)
+            logE("Failed to load UITabBarController, saving link")
+            (UIApplication.shared.delegate as? AppDelegate)?.widgetSpotlightPost = link
             return
         }
 
