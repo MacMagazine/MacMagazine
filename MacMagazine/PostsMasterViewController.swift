@@ -200,7 +200,7 @@ class PostsMasterViewController: UITableViewController, FetchedResultsController
 //        if Settings().whatsNew != Settings().appVersion {
 //            self.performSegue(withIdentifier: "showWhatsNewSegue", sender: self)
 //        }
-	}
+    }
 
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
@@ -660,15 +660,13 @@ func createWebViewController(post: PostData) -> WebViewController? {
 
 func showDetailController(with link: String) {
     guard let rootViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.last?.rootViewController else {
-        logE("Failed to load RootViewController")
         return
     }
 
-    logD("rootViewController: \(rootViewController.debugDescription)")
-
     CoreDataStack.shared.links { links in
-        guard let tabController = rootViewController as? UITabBarController else {
-            logE("Failed to load UITabBarController, saving link")
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+              let tabController = appDelegate.tabBarController else {
+            logE("Failed to load tabBarController - saving link")
             (UIApplication.shared.delegate as? AppDelegate)?.widgetSpotlightPost = link
             return
         }

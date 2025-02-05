@@ -36,6 +36,8 @@ class SplashViewController: UIViewController {
                     return
                 }
 
+                appDelegate.tabBarController = controller
+
                 splitViewController.delegate = appDelegate
 				splitViewController.preferredDisplayMode = UISplitViewController.DisplayMode.oneBesideSecondary
                 splitViewController.preferredPrimaryColumnWidthFraction = 0.33

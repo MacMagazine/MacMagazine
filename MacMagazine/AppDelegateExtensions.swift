@@ -85,7 +85,7 @@ extension AppDelegate {
 		// Push Notification
 		pushNotification = PushNotification()
 		pushNotification?.setup(options: launchOptions)
-	}
+    }
 }
 
 extension AppDelegate {

@@ -20,8 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var widgetSpotlightPost: String?
     var shortcutAction: Notification.Name?
 	var pushNotification: PushNotification?
+    var tabBarController: UITabBarController?
 
-	// MARK: - Window lifecycle -
+    // MARK: - Window lifecycle -
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
